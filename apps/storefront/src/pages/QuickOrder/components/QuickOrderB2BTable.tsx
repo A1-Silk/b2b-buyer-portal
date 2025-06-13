@@ -378,7 +378,7 @@ function QuickOrderTable({
           basePrice,
           otherTips,
         } = row;
-        console.log(row)
+
         let priceIncTax = Number(basePrice);
         if (variants?.length) {
           priceIncTax =
