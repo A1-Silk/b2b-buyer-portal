@@ -1,6 +1,7 @@
 import { forwardRef, Ref, useImperativeHandle, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
-import { Box, styled, Typography } from '@mui/material';
+import { Box, styled, Typography, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
@@ -222,6 +223,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const {
           basePrice,
           offeredPrice,
+          otherTips,
           productsSearch: { variants = [], taxClassId },
         } = row;
 
@@ -254,6 +256,13 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   }),
                   row,
                 )}
+                {
+                  otherTips ? (
+                    <Tooltip title={otherTips} arrow>
+                      <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                    </Tooltip>
+                  ) : null
+                }
               </Typography>
             )}
 
@@ -305,6 +314,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           quantity,
           offeredPrice,
+          otherTips,
           productsSearch: { variants = [], taxClassId },
         } = row;
 
@@ -315,7 +325,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const discountTaxPrice = enteredInclusiveTax
           ? (Number(offeredPrice) * taxRate) / (1 + taxRate)
           : Number(offeredPrice) * taxRate;
-
+        
         const price = getBCPrice(Number(basePrice), taxPrice);
         const discountPrice = getBCPrice(Number(offeredPrice), discountTaxPrice);
         const isDiscount = Number(basePrice) - Number(offeredPrice) > 0 && displayDiscount;
@@ -340,6 +350,13 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   }),
                   row,
                 )}
+                {
+                  otherTips ? (
+                    <Tooltip title={otherTips} arrow>
+                      <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                    </Tooltip>
+                  ) : null
+                }
               </Typography>
             )}
             <Typography

@@ -180,6 +180,7 @@ function QuoteDetail() {
     tax: 0,
     shipping: 0,
     totalAmount: 0,
+    otherTips: '',
   });
   const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [isShowFooter, setIsShowFooter] = useState(false);
@@ -364,6 +365,7 @@ function QuoteDetail() {
         tax: quote.taxTotal,
         shipping: quote.shippingTotal,
         totalAmount: quote.totalAmount,
+        otherTips: quote.otherTips,
       });
       setProductList(productsWithMoreInfo);
 

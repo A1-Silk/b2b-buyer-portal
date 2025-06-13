@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
-import { Box, styled, TextField, Typography } from '@mui/material';
+import { Box, styled, TextField, Typography, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 import B3Spin from '@/components/spin/B3Spin';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
@@ -375,7 +376,9 @@ function QuickOrderTable({
           productsSearch: { variants },
           variantId,
           basePrice,
+          otherTips,
         } = row;
+        console.log(row)
         let priceIncTax = Number(basePrice);
         if (variants?.length) {
           priceIncTax =
@@ -393,6 +396,13 @@ function QuickOrderTable({
             }}
           >
             {`${showPrice(currencyFormat(price), row)}`}
+            {
+              otherTips ? (
+                <Tooltip title={otherTips} arrow>
+                  <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                </Tooltip>
+              ) : null
+            }
           </Typography>
         );
       },

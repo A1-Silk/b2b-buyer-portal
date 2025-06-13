@@ -618,9 +618,14 @@ export const deleteB2BShoppingList = (id: number) =>
   });
 
 export const getB2BShoppingListDetails = (data: CustomFieldItems = {}) =>
-  B3Request.graphqlB2B({
-    query: getShoppingListDetails(data),
-  }).then((res) => res.shoppingList);
+  B3Request.graphqlB2B(
+    {
+      query: getShoppingListDetails(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/shoppinglist'
+  ).then((res) => res.shoppingList);
 
 export const addProductToShoppingList = (data: CustomFieldItems = {}) =>
   B3Request.graphqlB2B({
@@ -685,9 +690,14 @@ export const deleteBcShoppingList = (id: number) =>
   });
 
 export const getBcShoppingListDetails = (data: CustomFieldItems = {}) =>
-  B3Request.graphqlB2B({
-    query: getCustomerShoppingListDetails(data),
-  }).then((res) => res.customerShoppingList);
+  B3Request.graphqlB2B(
+    {
+      query: getCustomerShoppingListDetails(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/shoppinglist'
+  ).then((res) => res.customerShoppingList);
 
 export const addProductToBcShoppingList = (data: CustomFieldItems = {}) =>
   B3Request.graphqlB2B({

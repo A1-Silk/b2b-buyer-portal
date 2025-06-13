@@ -1,5 +1,6 @@
 import { useB3Lang } from '@b3/lang';
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 import { useAppSelector } from '@/store';
 import { currencyFormatConvert } from '@/utils';
@@ -10,6 +11,7 @@ interface Summary {
   tax: string | number;
   shipping: string | number;
   totalAmount: string | number;
+  otherTips?: string;
 }
 
 interface QuoteDetailSummaryProps {
@@ -21,7 +23,7 @@ interface QuoteDetailSummaryProps {
 }
 
 export default function QuoteDetailSummary({
-  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount },
+  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount, otherTips },
   quoteDetailTax = 0,
   status,
   quoteDetail,
@@ -118,6 +120,13 @@ export default function QuoteDetailSummary({
                 <Typography>{b3Lang('quoteDetail.summary.originalSubtotal')}</Typography>
                 <Typography>
                   {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
+                  {
+                    otherTips ? (
+                      <Tooltip title={otherTips} arrow>
+                        <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                      </Tooltip>
+                    ) : null
+                  }
                 </Typography>
               </Grid>
             )}
@@ -139,7 +148,6 @@ export default function QuoteDetailSummary({
                 </Typography>
               </Grid>
             )}
-
             <Grid
               container
               justifyContent="space-between"

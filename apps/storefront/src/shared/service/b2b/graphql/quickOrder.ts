@@ -50,11 +50,21 @@ const orderedProducts = (data: CustomFieldItems) => `{
 }`;
 
 export const getOrderedProducts = (data: CustomFieldItems) =>
-  B3Request.graphqlB2B({
-    query: orderedProducts(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: orderedProducts(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/orderedProducts'
+  );
 
 export const getBcOrderedProducts = (data: CustomFieldItems) =>
-  B3Request.graphqlB2B({
-    query: orderedProducts(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: orderedProducts(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/orderedProducts'
+  );

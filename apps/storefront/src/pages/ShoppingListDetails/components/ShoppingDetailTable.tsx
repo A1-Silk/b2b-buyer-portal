@@ -10,7 +10,8 @@ import {
 } from 'react';
 import { useB3Lang } from '@b3/lang';
 import { Delete, Edit, StickyNote2 } from '@mui/icons-material';
-import { Box, Grid, styled, TextField, Typography } from '@mui/material';
+import { Box, Grid, styled, TextField, Typography, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
@@ -184,6 +185,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
   const [qtyNotChangeFlag, setQtyNotChangeFlag] = useState<boolean>(true);
   const [originProducts, setOriginProducts] = useState<ListItemProps[]>([]);
   const [shoppingListTotalPrice, setShoppingListTotalPrice] = useState<number>(0.0);
+  const [otherTips, setOtherTips] = useState<string>('');
 
   const [addNoteOpen, setAddNoteOpen] = useState<boolean>(false);
   const [addNoteItemId, setAddNoteItemId] = useState<number | string>('');
@@ -378,6 +380,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
         products: { edges },
         grandTotal,
         totalTax,
+        otherTips,
       } = shoppingListInfo;
 
       const NewShoppingListTotalPrice = showInclusiveTaxPrice
@@ -395,6 +398,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
       setPriceHidden(isPriceHidden);
       setOriginProducts(cloneDeep(edges));
       setShoppingListTotalPrice(NewShoppingListTotalPrice);
+      setOtherTips(otherTips || '');
     }
   }, [shoppingListInfo, showInclusiveTaxPrice]);
 
@@ -513,7 +517,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
       key: 'Price',
       title: b3Lang('shoppingList.table.price'),
       render: (row: CustomFieldItems) => {
-        const { basePrice, taxPrice = 0 } = row;
+        const { basePrice, taxPrice = 0, otherTips } = row;
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
 
         return (
@@ -523,6 +527,13 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
             }}
           >
             {showPrice(currencyFormat(inTaxPrice), row)}
+            {
+              otherTips ? (
+                <Tooltip title={otherTips} arrow>
+                  <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                </Tooltip>
+              ) : null
+            }
           </Typography>
         );
       },
@@ -574,6 +585,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
           itemId,
           productsSearch: { options },
           taxPrice = 0,
+          otherTips,
         } = row;
 
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
@@ -596,6 +608,13 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
               }}
             >
               {showPrice(currencyFormat(totalPrice), row)}
+              {
+                otherTips ? (
+                  <Tooltip title={otherTips} arrow>
+                    <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                  </Tooltip>
+                ) : null
+              }
             </Typography>
             <Box
               sx={{
@@ -720,6 +739,13 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
           }}
         >
           {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
+          {
+            otherTips ? (
+              <Tooltip title={otherTips} arrow>
+                <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+              </Tooltip>
+            ) : null
+          }
         </Typography>
       </Box>
       <Box

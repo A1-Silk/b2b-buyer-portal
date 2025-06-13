@@ -44,17 +44,25 @@ function request(path: string, config?: RequestInit, type?: RequestTypeKeys) {
   return b3Fetch(url, init);
 }
 
-function graphqlRequest<T, Y>(type: RequestTypeKeys, data: T, config?: Y) {
+function graphqlRequest<T, Y>(type: RequestTypeKeys, data: T, config?: Y, shophiveUrl?: string) {
   const init = {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
       ...config,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(
+      shophiveUrl ?
+        {
+          ...data,
+          bundleUrl: GraphqlEndpointsFn(type)
+        }
+        : data
+    ),
   };
 
-  const url = GraphqlEndpointsFn(type);
+  const url = shophiveUrl || GraphqlEndpointsFn(type)
+
   return b3Fetch(url, init);
 }
 
@@ -84,13 +92,35 @@ const B3Request = {
   graphqlB2B: function post<T extends DataWrapper | CustomFieldItems = CustomFieldItems>(
     data: GQLRequest,
     customMessage = false,
+    isShophive = false,
+    shophiveUrl?: string,
   ): Promise<T extends DataWrapper ? T['data'] : T> {
     const { B2BToken } = store.getState().company.tokens;
-    const config = {
-      Authorization: `Bearer  ${B2BToken}`,
+    const config: { [key: string]: string } = {
+      Authorization: `Bearer ${B2BToken}`,
     };
 
-    return graphqlRequest(RequestType.B2BGraphql, data, config).then((value: B2bGQLResponse) => {
+    let requestUrl
+    if (isShophive && shophiveUrl) {
+      const shophiveConfig = (window as any).shophiveConfig;
+      const {
+        secretKey,
+        url,
+        customerID
+      } = shophiveConfig
+    
+      if (!secretKey || !url || !customerID) {
+        const message = "Can't find secretKey or url or customerID in shophiveConfig"
+        console.error(message);
+        throw new Error(message);
+      }
+    
+      requestUrl = url + shophiveUrl
+      config['a1-secret-key'] = secretKey;
+      config['bcCustomerId'] = customerID;
+    }
+
+    return graphqlRequest(RequestType.B2BGraphql, data, config, requestUrl).then((value: B2bGQLResponse) => {
       const error = value.errors?.[0];
 
       const message = error?.message;

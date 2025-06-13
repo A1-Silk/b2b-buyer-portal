@@ -308,23 +308,33 @@ export interface SearchB2BProductsResponse {
 export const searchB2BProducts = (data: CustomFieldItems = {}) => {
   const { currency_code: currencyCode } = getActiveCurrencyInfo();
 
-  return B3Request.graphqlB2B({
-    query: searchProducts({
-      ...data,
-      currencyCode: data?.currencyCode || currencyCode,
-    }),
-  });
+  return B3Request.graphqlB2B(
+    {
+      query: searchProducts({
+        ...data,
+        currencyCode: data?.currencyCode || currencyCode,
+      }),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/search'
+  );
 };
 
 export const searchBcProducts = (data: CustomFieldItems = {}) => {
   const { currency_code: currencyCode } = getActiveCurrencyInfo();
 
-  return B3Request.graphqlB2B({
-    query: searchProducts({
-      ...data,
-      currencyCode: data?.currencyCode || currencyCode,
-    }),
-  });
+  return B3Request.graphqlB2B(
+    {
+      query: searchProducts({
+        ...data,
+        currencyCode: data?.currencyCode || currencyCode,
+      }),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/search'
+  );
 };
 
 export const getBcVariantInfoBySkus = (data: CustomFieldItems = {}) =>

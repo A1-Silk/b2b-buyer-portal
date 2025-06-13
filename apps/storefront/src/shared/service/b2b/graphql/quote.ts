@@ -635,14 +635,24 @@ export interface B2BQuoteDetail {
 }
 
 export const getB2BQuoteDetail = (data: { id: number; date: string }) =>
-  B3Request.graphqlB2B({
-    query: getQuoteInfo(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: getQuoteInfo(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/quote'
+  );
 
 export const getBcQuoteDetail = (data: { id: number; date: string }) =>
-  B3Request.graphqlB2B({
-    query: getQuoteInfo(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: getQuoteInfo(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/quote'
+  );
 
 export const exportB2BQuotePdf = (data: {
   quoteId: number;
