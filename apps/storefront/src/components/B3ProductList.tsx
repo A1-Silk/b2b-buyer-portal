@@ -11,6 +11,7 @@ import { currencyFormat, ordersCurrencyFormat } from '@/utils';
 import { getDisplayPrice, judgmentBuyerProduct } from '@/utils/b3Product/b3Product';
 
 import { MoneyFormat, ProductItem } from '../types';
+import { OtherTips } from './otherTips';
 
 interface FlexProps {
   isHeader?: boolean;
@@ -322,6 +323,7 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
           priceLabel: string,
           priceValue: number,
           priceDiscountedValue: number,
+          otherTips?: string
         ) => {
           return (
             <FlexItem
@@ -336,34 +338,38 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
                   : {}
               }
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  justifyContent: textAlign === 'right' ? 'flex-end' : 'flex-start',
-                }}
-              >
+              <Flex>
                 <Box
                   sx={{
-                    '& #product-price': {
-                      textDecoration: discountAccountForSingleProduct > 0 ? 'line-through' : 'none',
-                    },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    justifyContent: textAlign === 'right' ? 'flex-end' : 'flex-start',
                   }}
                 >
-                  {isMobile && <span>{priceLabel}: </span>}
-                  <span id="product-price">{getDisplayPrice(priceValue)}</span>
-                </Box>
-                {discountAccountForSingleProduct > 0 ? (
                   <Box
                     sx={{
-                      color: '#2E7D32',
+                      '& #product-price': {
+                        textDecoration:
+                          discountAccountForSingleProduct > 0 ? 'line-through' : 'none',
+                      },
                     }}
                   >
-                    {getDisplayPrice(priceDiscountedValue)}
+                    {isMobile && <span>{priceLabel}: </span>}
+                    <span id="product-price">{getDisplayPrice(priceValue)}</span>
                   </Box>
-                ) : null}
-              </Box>
+                  {discountAccountForSingleProduct > 0 ? (
+                    <Box
+                      sx={{
+                        color: '#2E7D32',
+                      }}
+                    >
+                      {getDisplayPrice(priceDiscountedValue)}
+                    </Box>
+                  ) : null}
+                </Box>
+                <OtherTips otherTips={otherTips} />
+              </Flex>
             </FlexItem>
           );
         };
@@ -410,7 +416,7 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
               </Box>
             </FlexItem>
 
-            {renderPrice('Price', productPrice, discountedPrice)}
+            {renderPrice('Price', productPrice, discountedPrice, product.otherTips)}
             <FlexItem
               textAlignLocation={textAlign}
               {...itemStyle.qty}
@@ -451,7 +457,7 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
               )}
             </FlexItem>
 
-            {renderPrice(totalText, totalPrice, discountedTotalPrice)}
+            {renderPrice(totalText, totalPrice, discountedTotalPrice, product.otherTips)}
             {renderAction && (
               <FlexItem
                 {...itemStyle.default}

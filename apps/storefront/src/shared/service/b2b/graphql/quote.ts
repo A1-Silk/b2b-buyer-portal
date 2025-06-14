@@ -641,7 +641,7 @@ export const getB2BQuoteDetail = (data: { id: number; date: string }) =>
     },
     false,
     true,
-    '/api/v1/real-time-pricing/quote'
+    '/api/v1/real-time-pricing/quote',
   );
 
 export const getBcQuoteDetail = (data: { id: number; date: string }) =>
@@ -651,7 +651,7 @@ export const getBcQuoteDetail = (data: { id: number; date: string }) =>
     },
     false,
     true,
-    '/api/v1/real-time-pricing/quote'
+    '/api/v1/real-time-pricing/quote',
   );
 
 export const exportB2BQuotePdf = (data: {
@@ -675,14 +675,24 @@ export const exportBcQuotePdf = (data: {
   });
 
 export const b2bQuoteCheckout = (data: { id: number }) =>
-  B3Request.graphqlB2B({
-    query: quoteCheckout(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: quoteCheckout(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/quoteCheckout',
+  );
 
 export const bcQuoteCheckout = (data: { id: number }) =>
-  B3Request.graphqlB2B({
-    query: quoteCheckout(data),
-  });
+  B3Request.graphqlB2B(
+    {
+      query: quoteCheckout(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/quoteCheckout',
+  );
 
 export const quoteDetailAttachFileCreate = (data: CustomFieldItems) =>
   B3Request.graphqlB2B({

@@ -11,6 +11,7 @@ import { currencyFormatConvert } from '@/utils';
 import { getBCPrice, getDisplayPrice } from '@/utils/b3Product/b3Product';
 
 import QuoteDetailTableCard from './QuoteDetailTableCard';
+import { OtherTips } from '@/components';
 
 interface ProductInfoProps {
   basePrice: number | string;
@@ -239,6 +240,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const discountPrice = getBCPrice(Number(offeredPrice), discountTaxPrice);
 
         const isDiscount = Number(basePrice) - Number(offeredPrice) > 0 && displayDiscount;
+
         return (
           <>
             {isDiscount && (
@@ -256,13 +258,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   }),
                   row,
                 )}
-                {
-                  otherTips ? (
-                    <Tooltip title={otherTips} arrow>
-                      <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                    </Tooltip>
-                  ) : null
-                }
+                <OtherTips otherTips={otherTips} />
               </Typography>
             )}
 
@@ -325,7 +321,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const discountTaxPrice = enteredInclusiveTax
           ? (Number(offeredPrice) * taxRate) / (1 + taxRate)
           : Number(offeredPrice) * taxRate;
-        
+
         const price = getBCPrice(Number(basePrice), taxPrice);
         const discountPrice = getBCPrice(Number(offeredPrice), discountTaxPrice);
         const isDiscount = Number(basePrice) - Number(offeredPrice) > 0 && displayDiscount;
@@ -350,13 +346,11 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   }),
                   row,
                 )}
-                {
-                  otherTips ? (
-                    <Tooltip title={otherTips} arrow>
-                      <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                    </Tooltip>
-                  ) : null
-                }
+                {otherTips ? (
+                  <Tooltip title={otherTips} arrow>
+                    <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
+                  </Tooltip>
+                ) : null}
               </Typography>
             )}
             <Typography

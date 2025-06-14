@@ -584,16 +584,23 @@ function QuoteDraft({ setOpenPage }: PageProps) {
           variantsItem = variants.find((item) => item.sku === node.variantSku);
         }
 
-        allPrice += Number(node?.basePrice || 0) * Number(node?.quantity || 0);
+        allPrice +=
+          Number(
+            (node as any)?.productsSearch?.variants?.[0]?.origin_price || node?.basePrice || 0,
+          ) * Number(node?.quantity || 0);
 
         allTaxPrice += Number(node?.taxPrice || 0) * Number(node?.quantity || 0);
 
         const items = {
           productId: node?.productsSearch?.id,
           sku: node.variantSku,
-          basePrice: Number(node?.basePrice || 0).toFixed(currency.decimal_places),
+          basePrice: Number(
+            (node as any)?.productsSearch?.variants?.[0]?.origin_price || node?.basePrice || 0,
+          ).toFixed(currency.decimal_places),
           discount: '0.00',
-          offeredPrice: Number(node?.basePrice || 0).toFixed(currency.decimal_places),
+          offeredPrice: Number(
+            (node as any)?.productsSearch?.variants?.[0]?.origin_price || node?.basePrice || 0,
+          ).toFixed(currency.decimal_places),
           quantity: node.quantity,
           variantId: variantsItem?.variant_id,
           imageUrl: node.primaryImage,
@@ -639,7 +646,7 @@ function QuoteDraft({ setOpenPage }: PageProps) {
         extraFields: info.extraFields || [],
         recipients: info.recipients || [],
       };
-
+      console.log(data);
       const fn = Number(role) === 99 ? createBCQuote : createQuote;
 
       if (!dispatchEvent('on-quote-create', data)) {

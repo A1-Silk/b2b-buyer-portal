@@ -14,7 +14,7 @@ import styled from '@emotion/styled';
 import { Box, Divider, TextField, Typography } from '@mui/material';
 import isEqual from 'lodash-es/isEqual';
 
-import { B3CustomForm } from '@/components';
+import { B3CustomForm, OtherTips } from '@/components';
 import B3Dialog from '@/components/B3Dialog';
 import B3Spin from '@/components/spin/B3Spin';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -574,6 +574,7 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
                     {!isShowPrice
                       ? ''
                       : currencyFormat(newPrice * Number(quantity) || getProductPrice(product))}
+                    <OtherTips otherTips={product.otherTips} />
                   </FlexItem>
 
                   <FlexItem>

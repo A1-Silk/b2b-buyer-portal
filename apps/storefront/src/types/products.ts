@@ -56,6 +56,7 @@ export interface ProductItem {
   inventoryLevel?: number;
   isPriceHidden?: boolean;
   applied_discounts?: AppliedDiscount[];
+  otherTips?: string
 }
 
 export interface ProductVariantSkuInfo {
