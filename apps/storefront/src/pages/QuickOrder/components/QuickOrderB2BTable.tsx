@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
-import { Box, styled, TextField, Typography, Tooltip } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, styled, TextField, Typography } from '@mui/material';
 
+import { OtherTips, Flex } from '@/components';
 import B3Spin from '@/components/spin/B3Spin';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
@@ -395,14 +395,10 @@ function QuickOrderTable({
               padding: '12px 0',
             }}
           >
-            {`${showPrice(currencyFormat(price), row)}`}
-            {
-              otherTips ? (
-                <Tooltip title={otherTips} arrow>
-                  <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                </Tooltip>
-              ) : null
-            }
+            <Flex alignItems="center" justifyContent="flex-end">
+              {`${showPrice(currencyFormat(price), row)}`}
+              <OtherTips otherTips={otherTips} />
+            </Flex>
           </Typography>
         );
       },

@@ -10,10 +10,10 @@ import {
 } from 'react';
 import { useB3Lang } from '@b3/lang';
 import { Delete, Edit, StickyNote2 } from '@mui/icons-material';
-import { Box, Grid, styled, TextField, Typography, Tooltip } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, Grid, styled, TextField, Typography } from '@mui/material';
 import cloneDeep from 'lodash-es/cloneDeep';
 
+import { Flex, OtherTips } from '@/components';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -526,14 +526,10 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
               padding: '12px 0',
             }}
           >
-            {showPrice(currencyFormat(inTaxPrice), row)}
-            {
-              otherTips ? (
-                <Tooltip title={otherTips} arrow>
-                  <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                </Tooltip>
-              ) : null
-            }
+            <Flex alignItems="center" justifyContent="flex-end">
+              {showPrice(currencyFormat(inTaxPrice), row)}
+              <OtherTips otherTips={otherTips} />
+            </Flex>
           </Typography>
         );
       },
@@ -607,14 +603,10 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
                 padding: '12px 0',
               }}
             >
-              {showPrice(currencyFormat(totalPrice), row)}
-              {
-                otherTips ? (
-                  <Tooltip title={otherTips} arrow>
-                    <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                  </Tooltip>
-                ) : null
-              }
+              <Flex alignItems="center" justifyContent="flex-end">
+                {showPrice(currencyFormat(totalPrice), row)}
+                <OtherTips otherTips={otherTips} />
+              </Flex>
             </Typography>
             <Box
               sx={{
@@ -738,14 +730,10 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
             fontSize: '24px',
           }}
         >
-          {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
-          {
-            otherTips ? (
-              <Tooltip title={otherTips} arrow>
-                <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-              </Tooltip>
-            ) : null
-          }
+          <Flex alignItems="center">
+            {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
+            <OtherTips otherTips={otherTips} />
+          </Flex>
         </Typography>
       </Box>
       <Box

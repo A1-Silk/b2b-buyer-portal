@@ -612,6 +612,8 @@ const getCalculatedProductPrice = async (
 
   if (variantItem) {
     const items = getCalculatedParams(optionList, variantItem, productsSearch?.allOptions || []);
+    console.log(qty);
+    console.log(items);
     const customerGroupId = getCustomerGroupId();
 
     const data = {
@@ -800,6 +802,7 @@ const calculateProductsPrice = async (
   // check if it's included calculatedValue
   // if not, prepare items array to get prices by `/v3/pricing/products` endpoint
   // then fetch them
+
   if (calculatedValue.length === 0) {
     const data = {
       channel_id: channelId,
@@ -846,6 +849,7 @@ const calculateProductsPrice = async (
 };
 
 const calculateProductListPrice = async (products: Partial<Product>[], type = '1') => {
+  console.log(products);
   const { decimal_places: decimalPlaces = 2, currency_code: currencyCode } =
     getActiveCurrencyInfo();
   try {
@@ -897,17 +901,25 @@ const calculateProductListPrice = async (products: Partial<Product>[], type = '1
       }
     }
 
+    console.log('-----', itemsOptions);
+
     if (isError) {
       return products;
     }
 
     const customerGroupId = getCustomerGroupId();
 
+    const quantityProducts = products.map((product) => ({
+      productId: product?.node?.productId || product?.productId,
+      quantity: product?.node?.quantity || product?.quantity,
+    }))
+
     const data = {
       channel_id: channelId,
       currency_code: currencyCode,
       items: itemsOptions,
       customer_group_id: customerGroupId,
+      quantityProducts,
     };
 
     const res = await getProductPricing({

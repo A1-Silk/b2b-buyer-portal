@@ -1,7 +1,7 @@
 import { useB3Lang } from '@b3/lang';
-import { Box, Card, CardContent, Grid, Typography, Tooltip } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
+import { Flex, OtherTips } from '@/components';
 import { useAppSelector } from '@/store';
 import { currencyFormatConvert } from '@/utils';
 
@@ -119,14 +119,10 @@ export default function QuoteDetailSummary({
               >
                 <Typography>{b3Lang('quoteDetail.summary.originalSubtotal')}</Typography>
                 <Typography>
-                  {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
-                  {
-                    otherTips ? (
-                      <Tooltip title={otherTips} arrow>
-                        <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                      </Tooltip>
-                    ) : null
-                  }
+                  <Flex alignItems="center">
+                    {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
+                    <OtherTips otherTips={otherTips} />
+                  </Flex>
                 </Typography>
               </Grid>
             )}

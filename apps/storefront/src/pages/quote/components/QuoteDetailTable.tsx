@@ -1,8 +1,8 @@
 import { forwardRef, Ref, useImperativeHandle, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
-import { Box, styled, Typography, Tooltip } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, styled, Typography } from '@mui/material';
 
+import { Flex, OtherTips } from '@/components';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -11,7 +11,6 @@ import { currencyFormatConvert } from '@/utils';
 import { getBCPrice, getDisplayPrice } from '@/utils/b3Product/b3Product';
 
 import QuoteDetailTableCard from './QuoteDetailTableCard';
-import { OtherTips } from '@/components';
 
 interface ProductInfoProps {
   basePrice: number | string;
@@ -106,6 +105,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
   const isEnableProduct = useAppSelector(
     ({ global }) => global.blockPendingQuoteNonPurchasableOOS.isEnableProduct,
   );
+
   const enteredInclusiveTax = useAppSelector(
     ({ storeConfigs }) => storeConfigs.currencies.enteredInclusiveTax,
   );
@@ -338,19 +338,17 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   textDecoration: 'line-through',
                 }}
               >
-                {showPrice(
-                  currencyFormatConvert(total, {
-                    currency,
-                    isConversionRate: false,
-                    useCurrentCurrency: !!currency,
-                  }),
-                  row,
-                )}
-                {otherTips ? (
-                  <Tooltip title={otherTips} arrow>
-                    <InfoIcon sx={{ color: '#888', cursor: 'pointer', fontSize: 18, ml: 1 }} />
-                  </Tooltip>
-                ) : null}
+                <Flex alignItems="center" justifyContent='flex-end'>
+                  {showPrice(
+                    currencyFormatConvert(total, {
+                      currency,
+                      isConversionRate: false,
+                      useCurrentCurrency: !!currency,
+                    }),
+                    row,
+                  )}
+                  <OtherTips otherTips={otherTips} />
+                </Flex>
               </Typography>
             )}
             <Typography

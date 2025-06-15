@@ -211,6 +211,7 @@ export interface CalculatedItems {
   product_id: number;
   variant_id: number;
   options: Partial<CalculatedOptions>[];
+  quantity?: number
 }
 
 export interface CalculatedProducts {

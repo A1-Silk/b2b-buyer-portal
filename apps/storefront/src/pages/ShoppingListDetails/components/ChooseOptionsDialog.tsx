@@ -14,7 +14,7 @@ import styled from '@emotion/styled';
 import { Box, Divider, TextField, Typography } from '@mui/material';
 import isEqual from 'lodash-es/isEqual';
 
-import { B3CustomForm, OtherTips } from '@/components';
+import { B3CustomForm, OtherTips, Flex as FlexComponent } from '@/components';
 import B3Dialog from '@/components/B3Dialog';
 import B3Spin from '@/components/spin/B3Spin';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -468,9 +468,15 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
   useEffect(() => {
     const getNewProductPrice = async () => {
       try {
+        console.log(chooseOptionsProduct);
         if (chooseOptionsProduct.length) {
           setIsRequestLoading(true);
-          const products = await calculateProductListPrice(chooseOptionsProduct);
+          const products = await calculateProductListPrice(
+            chooseOptionsProduct.map((product) => ({
+              ...product,
+              quantity: Number(quantity || 1),
+            })),
+          );
 
           if (products[0]) {
             const { basePrice, taxPrice } = products[0];
@@ -486,7 +492,7 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
     };
 
     getNewProductPrice();
-  }, [chooseOptionsProduct]);
+  }, [chooseOptionsProduct, quantity]);
 
   const handleConfirmClicked = () => {
     handleSubmit((value) => {
@@ -570,11 +576,13 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
                   </FlexItem>
 
                   <FlexItem>
-                    <span>{b3Lang('shoppingList.chooseOptionsDialog.price')}</span>
-                    {!isShowPrice
-                      ? ''
-                      : currencyFormat(newPrice * Number(quantity) || getProductPrice(product))}
-                    <OtherTips otherTips={product.otherTips} />
+                    <FlexComponent alignItems="center">
+                      <span>{b3Lang('shoppingList.chooseOptionsDialog.price')}</span>
+                      {!isShowPrice
+                        ? ''
+                        : currencyFormat(newPrice * Number(quantity) || getProductPrice(product))}
+                      <OtherTips otherTips={product.otherTips} />
+                    </FlexComponent>
                   </FlexItem>
 
                   <FlexItem>
