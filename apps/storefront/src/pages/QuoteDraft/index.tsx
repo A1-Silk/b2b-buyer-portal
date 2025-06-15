@@ -646,7 +646,7 @@ function QuoteDraft({ setOpenPage }: PageProps) {
         extraFields: info.extraFields || [],
         recipients: info.recipients || [],
       };
-      console.log(data);
+
       const fn = Number(role) === 99 ? createBCQuote : createQuote;
 
       if (!dispatchEvent('on-quote-create', data)) {

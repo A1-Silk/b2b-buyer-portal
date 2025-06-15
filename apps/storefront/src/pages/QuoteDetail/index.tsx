@@ -712,6 +712,15 @@ function QuoteDetail() {
               }
             >
               <QuoteDetailTable
+                isAllowCheckout={
+                  quoteConvertToOrderPermission &&
+                  quotePurchasabilityPermission &&
+                  Number(quoteDetail.status) !== 4 &&
+                  isShowFooter &&
+                  quoteDetail?.allowCheckout &&
+                  isAutoEnableQuoteCheckout &&
+                  isEnableProductShowCheckout()
+                }
                 total={productList.length}
                 currency={quoteDetail.currency}
                 isHandleApprove={isHandleApprove}
@@ -747,6 +756,15 @@ function QuoteDetail() {
                 quoteDetailTax={quoteDetailTax}
                 status={quoteDetail.status}
                 quoteDetail={quoteDetail}
+                isAllowCheckout={
+                  quoteConvertToOrderPermission &&
+                  quotePurchasabilityPermission &&
+                  Number(quoteDetail.status) !== 4 &&
+                  isShowFooter &&
+                  quoteDetail?.allowCheckout &&
+                  isAutoEnableQuoteCheckout &&
+                  isEnableProductShowCheckout()
+                }
               />
             </Box>
 

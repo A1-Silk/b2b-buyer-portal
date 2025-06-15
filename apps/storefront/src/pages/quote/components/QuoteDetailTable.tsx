@@ -45,6 +45,7 @@ interface ShoppingDetailTableProps {
   getTaxRate: (taxClassId: number, variants: any) => number;
   displayDiscount: boolean;
   currency: CurrencyProps;
+  isAllowCheckout?: boolean;
 }
 
 interface SearchProps {
@@ -99,8 +100,15 @@ const StyledImage = styled('img')(() => ({
 
 function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
   const b3Lang = useB3Lang();
-  const { total, getQuoteTableDetails, getTaxRate, isHandleApprove, displayDiscount, currency } =
-    props;
+  const {
+    total,
+    getQuoteTableDetails,
+    getTaxRate,
+    isHandleApprove,
+    displayDiscount,
+    currency,
+    isAllowCheckout,
+  } = props;
 
   const isEnableProduct = useAppSelector(
     ({ global }) => global.blockPendingQuoteNonPurchasableOOS.isEnableProduct,
@@ -137,6 +145,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
     }
     return price;
   };
+
   const columnItems: TableColumnItem<ProductInfoProps>[] = [
     {
       key: 'Product',
@@ -223,10 +232,14 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
       render: (row: CustomFieldItems) => {
         const {
           basePrice,
-          offeredPrice,
           otherTips,
           productsSearch: { variants = [], taxClassId },
         } = row;
+
+        let offeredPrice = row.offeredPrice;
+        if (!isAllowCheckout) {
+          offeredPrice = basePrice;
+        }
 
         const taxRate = getTaxRate(taxClassId, variants);
         const taxPrice = enteredInclusiveTax
@@ -250,15 +263,17 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   textDecoration: 'line-through',
                 }}
               >
-                {showPrice(
-                  currencyFormatConvert(price, {
-                    currency,
-                    isConversionRate: false,
-                    useCurrentCurrency: !!currency,
-                  }),
-                  row,
-                )}
-                <OtherTips otherTips={otherTips} />
+                <Flex alignItems="center" justifyContent="flex-end">
+                  {showPrice(
+                    currencyFormatConvert(price, {
+                      currency,
+                      isConversionRate: false,
+                      useCurrentCurrency: !!currency,
+                    }),
+                    row,
+                  )}
+                  <OtherTips otherTips={otherTips} />
+                </Flex>
               </Typography>
             )}
 
@@ -268,14 +283,17 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                 color: isDiscount ? '#2E7D32' : '#212121',
               }}
             >
-              {showPrice(
-                currencyFormatConvert(discountPrice, {
-                  currency,
-                  isConversionRate: false,
-                  useCurrentCurrency: !!currency,
-                }),
-                row,
-              )}
+              <Flex alignItems="center" justifyContent="flex-end">
+                {showPrice(
+                  currencyFormatConvert(discountPrice, {
+                    currency,
+                    isConversionRate: false,
+                    useCurrentCurrency: !!currency,
+                  }),
+                  row,
+                )}
+                {isAllowCheckout ? null : <OtherTips otherTips={otherTips} />}
+              </Flex>
             </Typography>
           </>
         );
@@ -309,10 +327,14 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const {
           basePrice,
           quantity,
-          offeredPrice,
           otherTips,
           productsSearch: { variants = [], taxClassId },
         } = row;
+
+        let offeredPrice = row.offeredPrice;
+        if (!isAllowCheckout) {
+          offeredPrice = basePrice;
+        }
 
         const taxRate = getTaxRate(taxClassId, variants);
         const taxPrice = enteredInclusiveTax
@@ -338,7 +360,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   textDecoration: 'line-through',
                 }}
               >
-                <Flex alignItems="center" justifyContent='flex-end'>
+                <Flex alignItems="center" justifyContent="flex-end">
                   {showPrice(
                     currencyFormatConvert(total, {
                       currency,
@@ -357,14 +379,17 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                 color: isDiscount ? '#2E7D32' : '#212121',
               }}
             >
-              {showPrice(
-                currencyFormatConvert(totalWithDiscount, {
-                  currency,
-                  isConversionRate: false,
-                  useCurrentCurrency: !!currency,
-                }),
-                row,
-              )}
+              <Flex alignItems="center" justifyContent="flex-end">
+                {showPrice(
+                  currencyFormatConvert(totalWithDiscount, {
+                    currency,
+                    isConversionRate: false,
+                    useCurrentCurrency: !!currency,
+                  }),
+                  row,
+                )}
+                {isAllowCheckout ? null : <OtherTips otherTips={otherTips} />}
+              </Flex>
             </Typography>
           </Box>
         );

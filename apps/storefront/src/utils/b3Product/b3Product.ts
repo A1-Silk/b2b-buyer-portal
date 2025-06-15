@@ -612,8 +612,6 @@ const getCalculatedProductPrice = async (
 
   if (variantItem) {
     const items = getCalculatedParams(optionList, variantItem, productsSearch?.allOptions || []);
-    console.log(qty);
-    console.log(items);
     const customerGroupId = getCustomerGroupId();
 
     const data = {

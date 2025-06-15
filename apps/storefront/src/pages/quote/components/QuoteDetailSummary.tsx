@@ -20,6 +20,7 @@ interface QuoteDetailSummaryProps {
   status: string;
   quoteDetail: CustomFieldItems;
   isHideQuoteCheckout: boolean;
+  isAllowCheckout?: boolean;
 }
 
 export default function QuoteDetailSummary({
@@ -28,6 +29,7 @@ export default function QuoteDetailSummary({
   status,
   quoteDetail,
   isHideQuoteCheckout,
+  isAllowCheckout,
 }: QuoteDetailSummaryProps) {
   const b3Lang = useB3Lang();
   const enteredInclusiveTax = useAppSelector(
@@ -97,7 +99,10 @@ export default function QuoteDetailSummary({
   };
 
   const subtotalPrice = Number(originalSubtotal);
-  const quotedSubtotal = Number(originalSubtotal) - Number(discount);
+  const quotedSubtotal = isAllowCheckout
+    ? Number(originalSubtotal) - Number(discount)
+    : Number(originalSubtotal);
+
   return (
     <Card>
       <CardContent>
@@ -222,7 +227,9 @@ export default function QuoteDetailSummary({
                   color: '#212121',
                 }}
               >
-                {showPrice(priceFormat(Number(totalAmount)))}
+                {showPrice(
+                  priceFormat(Number(isAllowCheckout ? totalAmount : quotedSubtotal)),
+                )}
               </Typography>
             </Grid>
           </Box>
