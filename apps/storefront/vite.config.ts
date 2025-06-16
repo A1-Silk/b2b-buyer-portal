@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => {
     test: {
       env: {
         VITE_B2B_URL: 'https://api-b2b.bigcommerce.com',
-        VITE_IS_LOCAL_ENVIRONMENT: 'TRUE',
+        VITE_IS_LOCAL_ENVIRONMENT: 'FALSE',
       },
       clearMocks: true,
       mockReset: true,
