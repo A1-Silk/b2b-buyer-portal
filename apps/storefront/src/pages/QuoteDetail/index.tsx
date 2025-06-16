@@ -180,6 +180,7 @@ function QuoteDetail() {
     tax: 0,
     shipping: 0,
     totalAmount: 0,
+    otherTips: '',
   });
   const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [isShowFooter, setIsShowFooter] = useState(false);
@@ -364,6 +365,7 @@ function QuoteDetail() {
         tax: quote.taxTotal,
         shipping: quote.shippingTotal,
         totalAmount: quote.totalAmount,
+        otherTips: quote.otherTips,
       });
       setProductList(productsWithMoreInfo);
 
@@ -710,6 +712,15 @@ function QuoteDetail() {
               }
             >
               <QuoteDetailTable
+                isAllowCheckout={
+                  quoteConvertToOrderPermission &&
+                  quotePurchasabilityPermission &&
+                  Number(quoteDetail.status) !== 4 &&
+                  isShowFooter &&
+                  quoteDetail?.allowCheckout &&
+                  isAutoEnableQuoteCheckout &&
+                  isEnableProductShowCheckout()
+                }
                 total={productList.length}
                 currency={quoteDetail.currency}
                 isHandleApprove={isHandleApprove}
@@ -745,6 +756,15 @@ function QuoteDetail() {
                 quoteDetailTax={quoteDetailTax}
                 status={quoteDetail.status}
                 quoteDetail={quoteDetail}
+                isAllowCheckout={
+                  quoteConvertToOrderPermission &&
+                  quotePurchasabilityPermission &&
+                  Number(quoteDetail.status) !== 4 &&
+                  isShowFooter &&
+                  quoteDetail?.allowCheckout &&
+                  isAutoEnableQuoteCheckout &&
+                  isEnableProductShowCheckout()
+                }
               />
             </Box>
 

@@ -462,10 +462,15 @@ export const getCompanyCreditConfig = () =>
   });
 
 export const getProductPricing = (data: Partial<ProductPrice>) =>
-  B3Request.graphqlB2B({
-    query: priceProducts,
-    variables: convertObjectOrArrayKeysToCamel(data),
-  }).then((res) => {
+  B3Request.graphqlB2B(
+    {
+      query: priceProducts,
+      variables: convertObjectOrArrayKeysToCamel(data),
+    },
+    false,
+    true,
+    '/api/v1/real-time-pricing/price',
+  ).then((res) => {
     const { priceProducts: b2bPriceProducts = [] } = res;
     return {
       data: convertObjectOrArrayKeysToSnake(b2bPriceProducts) as CustomFieldItems[],

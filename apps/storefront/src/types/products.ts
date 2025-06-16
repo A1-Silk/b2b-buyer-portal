@@ -56,6 +56,7 @@ export interface ProductItem {
   inventoryLevel?: number;
   isPriceHidden?: boolean;
   applied_discounts?: AppliedDiscount[];
+  otherTips?: string
 }
 
 export interface ProductVariantSkuInfo {
@@ -210,6 +211,7 @@ export interface CalculatedItems {
   product_id: number;
   variant_id: number;
   options: Partial<CalculatedOptions>[];
+  quantity?: number
 }
 
 export interface CalculatedProducts {

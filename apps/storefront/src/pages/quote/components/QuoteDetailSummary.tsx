@@ -1,6 +1,7 @@
 import { useB3Lang } from '@b3/lang';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
+import { Flex, OtherTips } from '@/components';
 import { useAppSelector } from '@/store';
 import { currencyFormatConvert } from '@/utils';
 
@@ -10,6 +11,7 @@ interface Summary {
   tax: string | number;
   shipping: string | number;
   totalAmount: string | number;
+  otherTips?: string;
 }
 
 interface QuoteDetailSummaryProps {
@@ -18,14 +20,16 @@ interface QuoteDetailSummaryProps {
   status: string;
   quoteDetail: CustomFieldItems;
   isHideQuoteCheckout: boolean;
+  isAllowCheckout?: boolean;
 }
 
 export default function QuoteDetailSummary({
-  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount },
+  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount, otherTips },
   quoteDetailTax = 0,
   status,
   quoteDetail,
   isHideQuoteCheckout,
+  isAllowCheckout,
 }: QuoteDetailSummaryProps) {
   const b3Lang = useB3Lang();
   const enteredInclusiveTax = useAppSelector(
@@ -95,7 +99,10 @@ export default function QuoteDetailSummary({
   };
 
   const subtotalPrice = Number(originalSubtotal);
-  const quotedSubtotal = Number(originalSubtotal) - Number(discount);
+  const quotedSubtotal = isAllowCheckout
+    ? Number(originalSubtotal) - Number(discount)
+    : Number(originalSubtotal);
+
   return (
     <Card>
       <CardContent>
@@ -117,7 +124,10 @@ export default function QuoteDetailSummary({
               >
                 <Typography>{b3Lang('quoteDetail.summary.originalSubtotal')}</Typography>
                 <Typography>
-                  {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
+                  <Flex alignItems="center">
+                    {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
+                    <OtherTips otherTips={otherTips} />
+                  </Flex>
                 </Typography>
               </Grid>
             )}
@@ -139,7 +149,6 @@ export default function QuoteDetailSummary({
                 </Typography>
               </Grid>
             )}
-
             <Grid
               container
               justifyContent="space-between"
@@ -218,7 +227,9 @@ export default function QuoteDetailSummary({
                   color: '#212121',
                 }}
               >
-                {showPrice(priceFormat(Number(totalAmount)))}
+                {showPrice(
+                  priceFormat(Number(isAllowCheckout ? totalAmount : quotedSubtotal)),
+                )}
               </Typography>
             </Grid>
           </Box>
