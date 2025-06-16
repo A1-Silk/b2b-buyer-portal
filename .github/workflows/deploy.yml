@@ -27,7 +27,7 @@ jobs:
         run: |
           yarn
           yarn prepare
-          yarn build:dev
+          yarn build
 
       - name: Deploy
         run: |
