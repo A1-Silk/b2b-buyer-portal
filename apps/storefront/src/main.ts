@@ -5,7 +5,7 @@ const ENVIRONMENT_CDN_BASE_PATH: EnvSpecificConfig<string> = {
   local: '/',
   integration: 'https://microapps.integration.zone/b2b-buyer-portal/',
   staging: 'https://cdn.bundleb2b.net/b2b/staging/storefront/',
-  production: 'https://https://erp-connector.silkdigital.io/',
+  production: 'https://a1buyerportal.silkdigital.io/',
 };
 
 window.b2b = {
