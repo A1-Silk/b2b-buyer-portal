@@ -31,5 +31,5 @@ jobs:
 
       - name: Deploy
         run: |
-          aws s3 cp apps/dist s3://a1-buyer-portal/prod-app --recursive
+          aws s3 cp apps/storefront/dist s3://a1-buyer-portal/prod-app --recursive
           aws cloudfront create-invalidation --distribution-id EOKG6RLFTY9T9 --path "/*"
