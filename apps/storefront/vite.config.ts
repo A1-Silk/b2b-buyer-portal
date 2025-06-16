@@ -84,12 +84,8 @@ export default defineConfig(({ mode }) => {
           headless: 'src/headless.ts',
         },
         output: {
-          entryFileNames({ name }) {
-            if (name.includes('headless') || env.VITE_DISABLE_BUILD_HASH) {
-              return '[name].js';
-            }
-
-            return '[name].[hash].js';
+          entryFileNames() {
+            return '[name].js';
           },
           manualChunks: {
             reactVendor: ['react', 'react-dom'],
