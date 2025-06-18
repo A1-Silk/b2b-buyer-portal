@@ -465,7 +465,7 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
               )}
             </FlexItem>
 
-            {renderPrice(totalText, totalPrice, discountedTotalPrice, product.otherTips)}
+            {renderPrice(totalText, totalPrice, discountedTotalPrice, product.otherTips, product.needHidePrice)}
             {renderAction && (
               <FlexItem
                 {...itemStyle.default}
