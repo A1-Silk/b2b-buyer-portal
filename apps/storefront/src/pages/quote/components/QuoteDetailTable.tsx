@@ -2,7 +2,7 @@ import { forwardRef, Ref, useImperativeHandle, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
 import { Box, styled, Typography } from '@mui/material';
 
-import { Flex, OtherTips } from '@/components';
+import { OtherTips } from '@/components';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -233,6 +233,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         const {
           basePrice,
           otherTips,
+          needHidePrice,
           productsSearch: { variants = [], taxClassId },
         } = row;
 
@@ -263,17 +264,22 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   textDecoration: 'line-through',
                 }}
               >
-                <Flex alignItems="center" justifyContent="flex-end">
-                  {showPrice(
-                    currencyFormatConvert(price, {
-                      currency,
-                      isConversionRate: false,
-                      useCurrentCurrency: !!currency,
-                    }),
-                    row,
-                  )}
-                  <OtherTips otherTips={otherTips} />
-                </Flex>
+                <OtherTips
+                  price={
+                    <>
+                      {showPrice(
+                        currencyFormatConvert(price, {
+                          currency,
+                          isConversionRate: false,
+                          useCurrentCurrency: !!currency,
+                        }),
+                        row,
+                      )}
+                    </>
+                  }
+                  needHidePrice={needHidePrice}
+                  otherTips={otherTips}
+                 />
               </Typography>
             )}
 
@@ -283,17 +289,22 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                 color: isDiscount ? '#2E7D32' : '#212121',
               }}
             >
-              <Flex alignItems="center" justifyContent="flex-end">
-                {showPrice(
-                  currencyFormatConvert(discountPrice, {
-                    currency,
-                    isConversionRate: false,
-                    useCurrentCurrency: !!currency,
-                  }),
-                  row,
-                )}
-                {isAllowCheckout ? null : <OtherTips otherTips={otherTips} />}
-              </Flex>
+              <OtherTips
+                price={
+                  <>
+                    {showPrice(
+                      currencyFormatConvert(discountPrice, {
+                        currency,
+                        isConversionRate: false,
+                        useCurrentCurrency: !!currency,
+                      }),
+                      row,
+                    )}
+                  </>
+                }
+                needHidePrice={isAllowCheckout ? false : needHidePrice}
+                otherTips={isAllowCheckout ? '' : otherTips}
+              />
             </Typography>
           </>
         );
@@ -328,6 +339,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           quantity,
           otherTips,
+          needHidePrice,
           productsSearch: { variants = [], taxClassId },
         } = row;
 
@@ -360,17 +372,22 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                   textDecoration: 'line-through',
                 }}
               >
-                <Flex alignItems="center" justifyContent="flex-end">
-                  {showPrice(
-                    currencyFormatConvert(total, {
-                      currency,
-                      isConversionRate: false,
-                      useCurrentCurrency: !!currency,
-                    }),
-                    row,
-                  )}
-                  <OtherTips otherTips={otherTips} />
-                </Flex>
+                <OtherTips
+                  price={
+                    <>
+                      {showPrice(
+                        currencyFormatConvert(total, {
+                          currency,
+                          isConversionRate: false,
+                          useCurrentCurrency: !!currency,
+                        }),
+                        row,
+                      )}
+                    </>
+                  }
+                  needHidePrice={needHidePrice}
+                  otherTips={otherTips}
+                />
               </Typography>
             )}
             <Typography
@@ -379,17 +396,22 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                 color: isDiscount ? '#2E7D32' : '#212121',
               }}
             >
-              <Flex alignItems="center" justifyContent="flex-end">
-                {showPrice(
-                  currencyFormatConvert(totalWithDiscount, {
-                    currency,
-                    isConversionRate: false,
-                    useCurrentCurrency: !!currency,
-                  }),
-                  row,
-                )}
-                {isAllowCheckout ? null : <OtherTips otherTips={otherTips} />}
-              </Flex>
+              <OtherTips
+                price={
+                  <>
+                    {showPrice(
+                      currencyFormatConvert(totalWithDiscount, {
+                        currency,
+                        isConversionRate: false,
+                        useCurrentCurrency: !!currency,
+                      }),
+                      row,
+                    )}
+                  </>
+                }
+                needHidePrice={isAllowCheckout ? false : needHidePrice}
+                otherTips={isAllowCheckout ? '' : otherTips}
+              />
             </Typography>
           </Box>
         );

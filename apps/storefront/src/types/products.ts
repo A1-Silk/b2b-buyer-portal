@@ -57,6 +57,7 @@ export interface ProductItem {
   isPriceHidden?: boolean;
   applied_discounts?: AppliedDiscount[];
   otherTips?: string
+  needHidePrice?: boolean;
 }
 
 export interface ProductVariantSkuInfo {

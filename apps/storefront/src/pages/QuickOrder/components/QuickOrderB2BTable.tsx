@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useB3Lang } from '@b3/lang';
 import { Box, styled, TextField, Typography } from '@mui/material';
 
-import { OtherTips, Flex } from '@/components';
+import { OtherTips } from '@/components';
 import B3Spin from '@/components/spin/B3Spin';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
@@ -377,6 +377,7 @@ function QuickOrderTable({
           variantId,
           basePrice,
           otherTips,
+          needHidePrice,
         } = row;
 
         let priceIncTax = Number(basePrice);
@@ -395,10 +396,15 @@ function QuickOrderTable({
               padding: '12px 0',
             }}
           >
-            <Flex alignItems="center" justifyContent="flex-end">
-              {`${showPrice(currencyFormat(price), row)}`}
-              <OtherTips otherTips={otherTips} />
-            </Flex>
+            <OtherTips
+              price={
+                <>
+                  {`${showPrice(currencyFormat(price), row)}`}
+                </>
+              }
+              needHidePrice={needHidePrice}
+              otherTips={otherTips}
+            />
           </Typography>
         );
       },

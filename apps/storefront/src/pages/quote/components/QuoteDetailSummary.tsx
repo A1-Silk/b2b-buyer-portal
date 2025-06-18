@@ -1,7 +1,7 @@
 import { useB3Lang } from '@b3/lang';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
-import { Flex, OtherTips } from '@/components';
+import { OtherTips } from '@/components';
 import { useAppSelector } from '@/store';
 import { currencyFormatConvert } from '@/utils';
 
@@ -12,6 +12,7 @@ interface Summary {
   shipping: string | number;
   totalAmount: string | number;
   otherTips?: string;
+  needHidePrice?: boolean;
 }
 
 interface QuoteDetailSummaryProps {
@@ -24,7 +25,7 @@ interface QuoteDetailSummaryProps {
 }
 
 export default function QuoteDetailSummary({
-  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount, otherTips },
+  quoteSummary: { originalSubtotal, discount, tax, shipping, totalAmount, otherTips, needHidePrice },
   quoteDetailTax = 0,
   status,
   quoteDetail,
@@ -124,10 +125,15 @@ export default function QuoteDetailSummary({
               >
                 <Typography>{b3Lang('quoteDetail.summary.originalSubtotal')}</Typography>
                 <Typography>
-                  <Flex alignItems="center">
-                    {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
-                    <OtherTips otherTips={otherTips} />
-                  </Flex>
+                  <OtherTips
+                    price={
+                      <>
+                        {showPrice(priceFormat(getCurrentPrice(subtotalPrice, quoteDetailTax)))}
+                      </>
+                    }
+                    needHidePrice={needHidePrice}
+                    otherTips={otherTips}
+                  />
                 </Typography>
               </Grid>
             )}

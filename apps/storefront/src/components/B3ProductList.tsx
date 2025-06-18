@@ -323,7 +323,8 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
           priceLabel: string,
           priceValue: number,
           priceDiscountedValue: number,
-          otherTips?: string
+          otherTips?: string,
+          needHidePrice?: boolean,
         ) => {
           return (
             <FlexItem
@@ -339,36 +340,43 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
               }
             >
               <Flex>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    justifyContent: textAlign === 'right' ? 'flex-end' : 'flex-start',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      '& #product-price': {
-                        textDecoration:
-                          discountAccountForSingleProduct > 0 ? 'line-through' : 'none',
-                      },
-                    }}
-                  >
-                    {isMobile && <span>{priceLabel}: </span>}
-                    <span id="product-price">{getDisplayPrice(priceValue)}</span>
-                  </Box>
-                  {discountAccountForSingleProduct > 0 ? (
-                    <Box
-                      sx={{
-                        color: '#2E7D32',
-                      }}
-                    >
-                      {getDisplayPrice(priceDiscountedValue)}
-                    </Box>
-                  ) : null}
-                </Box>
-                <OtherTips otherTips={otherTips} />
+                <OtherTips
+                    price={
+                      <>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-end',
+                            justifyContent: textAlign === 'right' ? 'flex-end' : 'flex-start',
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              '& #product-price': {
+                                textDecoration:
+                                  discountAccountForSingleProduct > 0 ? 'line-through' : 'none',
+                              },
+                            }}
+                          >
+                            {isMobile && <span>{priceLabel}: </span>}
+                            <span id="product-price">{getDisplayPrice(priceValue)}</span>
+                          </Box>
+                          {discountAccountForSingleProduct > 0 ? (
+                            <Box
+                              sx={{
+                                color: '#2E7D32',
+                              }}
+                            >
+                              {getDisplayPrice(priceDiscountedValue)}
+                            </Box>
+                          ) : null}
+                        </Box>
+                      </>
+                    }
+                    needHidePrice={needHidePrice}
+                    otherTips={otherTips}
+                  />
               </Flex>
             </FlexItem>
           );
