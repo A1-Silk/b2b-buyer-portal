@@ -424,7 +424,7 @@ export default function B3ProductList<T>(props: ProductProps<T>) {
               </Box>
             </FlexItem>
 
-            {renderPrice('Price', productPrice, discountedPrice, product.otherTips)}
+            {renderPrice('Price', productPrice, discountedPrice, product.otherTips, product.needHidePrice)}
             <FlexItem
               textAlignLocation={textAlign}
               {...itemStyle.qty}
