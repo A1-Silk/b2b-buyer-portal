@@ -13,7 +13,7 @@ import { Delete, Edit, StickyNote2 } from '@mui/icons-material';
 import { Box, Grid, styled, TextField, Typography } from '@mui/material';
 import cloneDeep from 'lodash-es/cloneDeep';
 
-import { Flex, OtherTips } from '@/components';
+import { OtherTips } from '@/components';
 import { B3PaginationTable, GetRequestList } from '@/components/table/B3PaginationTable';
 import { TableColumnItem } from '@/components/table/B3Table';
 import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
@@ -401,7 +401,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
       setOriginProducts(cloneDeep(edges));
       setShoppingListTotalPrice(NewShoppingListTotalPrice);
       setOtherTips(otherTips || '');
-      setOtherTips(needHidePrice || false);
+      setNeedHidePrice(needHidePrice || false);
     }
   }, [shoppingListInfo, showInclusiveTaxPrice]);
 
