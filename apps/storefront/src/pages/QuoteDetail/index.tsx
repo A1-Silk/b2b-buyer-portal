@@ -366,6 +366,7 @@ function QuoteDetail() {
         shipping: quote.shippingTotal,
         totalAmount: quote.totalAmount,
         otherTips: quote.otherTips,
+        needHidePrice: quote.needHidePrice,
       });
       setProductList(productsWithMoreInfo);
 
