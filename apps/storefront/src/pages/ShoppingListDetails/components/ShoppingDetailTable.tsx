@@ -186,6 +186,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
   const [originProducts, setOriginProducts] = useState<ListItemProps[]>([]);
   const [shoppingListTotalPrice, setShoppingListTotalPrice] = useState<number>(0.0);
   const [otherTips, setOtherTips] = useState<string>('');
+  const [needHidePrice, setNeedHidePrice] = useState<boolean>(false);
 
   const [addNoteOpen, setAddNoteOpen] = useState<boolean>(false);
   const [addNoteItemId, setAddNoteItemId] = useState<number | string>('');
@@ -381,6 +382,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
         grandTotal,
         totalTax,
         otherTips,
+        needHidePrice,
       } = shoppingListInfo;
 
       const NewShoppingListTotalPrice = showInclusiveTaxPrice
@@ -399,6 +401,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
       setOriginProducts(cloneDeep(edges));
       setShoppingListTotalPrice(NewShoppingListTotalPrice);
       setOtherTips(otherTips || '');
+      setOtherTips(needHidePrice || false);
     }
   }, [shoppingListInfo, showInclusiveTaxPrice]);
 
@@ -517,7 +520,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
       key: 'Price',
       title: b3Lang('shoppingList.table.price'),
       render: (row: CustomFieldItems) => {
-        const { basePrice, taxPrice = 0, otherTips } = row;
+        const { basePrice, taxPrice = 0, otherTips, needHidePrice } = row;
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
 
         return (
@@ -526,10 +529,15 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
               padding: '12px 0',
             }}
           >
-            <Flex alignItems="center" justifyContent="flex-end">
-              {showPrice(currencyFormat(inTaxPrice), row)}
-              <OtherTips otherTips={otherTips} />
-            </Flex>
+            <OtherTips
+              price={
+                <>
+                  {showPrice(currencyFormat(inTaxPrice), row)}
+                </>
+              }
+              needHidePrice={needHidePrice}
+              otherTips={otherTips}
+            />
           </Typography>
         );
       },
@@ -582,6 +590,7 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
           productsSearch: { options },
           taxPrice = 0,
           otherTips,
+          needHidePrice,
         } = row;
 
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
@@ -603,10 +612,15 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
                 padding: '12px 0',
               }}
             >
-              <Flex alignItems="center" justifyContent="flex-end">
-                {showPrice(currencyFormat(totalPrice), row)}
-                <OtherTips otherTips={otherTips} />
-              </Flex>
+              <OtherTips
+                price={
+                  <>
+                    {showPrice(currencyFormat(totalPrice), row)}
+                  </>
+                }
+                needHidePrice={needHidePrice}
+                otherTips={otherTips}
+              />
             </Typography>
             <Box
               sx={{
@@ -730,10 +744,15 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
             fontSize: '24px',
           }}
         >
-          <Flex alignItems="center">
-            {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
-            <OtherTips otherTips={otherTips} />
-          </Flex>
+          <OtherTips
+              price={
+                <>
+                  {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
+                </>
+              }
+              needHidePrice={needHidePrice}
+              otherTips={otherTips}
+            />
         </Typography>
       </Box>
       <Box

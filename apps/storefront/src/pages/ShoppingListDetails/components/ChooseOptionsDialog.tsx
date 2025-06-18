@@ -574,15 +574,19 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
                       ))}
                     </Box>
                   </FlexItem>
-
                   <FlexItem>
-                    <FlexComponent alignItems="center">
-                      <span>{b3Lang('shoppingList.chooseOptionsDialog.price')}</span>
-                      {!isShowPrice
-                        ? ''
-                        : currencyFormat(newPrice * Number(quantity) || getProductPrice(product))}
-                      <OtherTips otherTips={product.otherTips} />
-                    </FlexComponent>
+                    <OtherTips
+                      price={
+                        <>
+                          <span>{b3Lang('shoppingList.chooseOptionsDialog.price')}</span>
+                          {!isShowPrice
+                            ? ''
+                            : currencyFormat(newPrice * Number(quantity) || getProductPrice(product))}
+                        </>
+                      }
+                      needHidePrice={product.needHidePrice}
+                      otherTips={product.otherTips}
+                    />
                   </FlexItem>
 
                   <FlexItem>
