@@ -234,8 +234,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           otherTips,
           needHidePrice,
-          need_hide_price,
-          other_tips,
+          calculatedValue,
           productsSearch: { variants = [], taxClassId },
         } = row;
 
@@ -304,8 +303,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                     )}
                   </>
                 }
-                 needHidePrice={isAllowCheckout ? false : (needHidePrice || need_hide_price)}
-                otherTips={isAllowCheckout ? '' : (otherTips || other_tips)}
+                needHidePrice={isAllowCheckout ? false : (needHidePrice || calculatedValue?.need_hide_price)}
+                otherTips={isAllowCheckout ? '' : (otherTips || calculatedValue?.other_tips)}
               />
             </Typography>
           </>
@@ -341,8 +340,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           quantity,
           otherTips,
-          other_tips,
-          need_hide_price,
+          calculatedValue,
           needHidePrice,
           productsSearch: { variants = [], taxClassId },
         } = row;
@@ -413,8 +411,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                     )}
                   </>
                 }
-                needHidePrice={isAllowCheckout ? false : (needHidePrice || need_hide_price)}
-                otherTips={isAllowCheckout ? '' : (otherTips || other_tips)}
+                needHidePrice={isAllowCheckout ? false : (needHidePrice || calculatedValue?.need_hide_price)}
+                otherTips={isAllowCheckout ? '' : (otherTips || calculatedValue?.other_tips)}
               />
             </Typography>
           </Box>
