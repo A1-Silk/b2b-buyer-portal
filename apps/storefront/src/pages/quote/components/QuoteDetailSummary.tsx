@@ -149,9 +149,17 @@ export default function QuoteDetailSummary({
               >
                 <Typography>{b3Lang('quoteDetail.summary.discountAmount')}</Typography>
                 <Typography>
-                  {Number(discount) > 0
-                    ? `-${priceFormat(Number(discount))}`
-                    : priceFormat(Number(discount))}
+                  <OtherTips
+                    price={
+                      <>
+                        {Number(discount) > 0
+                        ? `-${priceFormat(Number(discount))}`
+                        : priceFormat(Number(discount))}
+                      </>
+                    }
+                    needHidePrice={needHidePrice}
+                    otherTips={otherTips}
+                  />
                 </Typography>
               </Grid>
             )}

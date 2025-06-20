@@ -468,7 +468,6 @@ export default function ChooseOptionsDialog(props: ChooseOptionsDialogProps) {
   useEffect(() => {
     const getNewProductPrice = async () => {
       try {
-        console.log(chooseOptionsProduct);
         if (chooseOptionsProduct.length) {
           setIsRequestLoading(true);
           const products = await calculateProductListPrice(
