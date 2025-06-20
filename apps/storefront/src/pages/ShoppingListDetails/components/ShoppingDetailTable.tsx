@@ -739,21 +739,6 @@ function ShoppingDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>)
             quantity: shoppingListInfo?.products?.totalCount || 0,
           })}
         </Typography>
-        <Typography
-          sx={{
-            fontSize: '24px',
-          }}
-        >
-          <OtherTips
-              price={
-                <>
-                  {priceHidden ? '' : currencyFormat(shoppingListTotalPrice || 0.0)}
-                </>
-              }
-              needHidePrice={needHidePrice}
-              otherTips={otherTips}
-            />
-        </Typography>
       </Box>
       <Box
         sx={{
