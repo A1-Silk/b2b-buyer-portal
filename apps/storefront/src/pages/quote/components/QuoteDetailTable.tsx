@@ -109,6 +109,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
     currency,
     isAllowCheckout,
   } = props;
+  console.log('props', props)
 
   const isEnableProduct = useAppSelector(
     ({ global }) => global.blockPendingQuoteNonPurchasableOOS.isEnableProduct,
@@ -237,6 +238,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           productsSearch: { variants = [], taxClassId, calculatedValue },
         } = row;
 
+        console.log('row', row)
+
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
           offeredPrice = basePrice;
@@ -342,6 +345,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           needHidePrice,
           productsSearch: { variants = [], taxClassId, calculatedValue },
         } = row;
+
+        console.log('row2', row)
 
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
