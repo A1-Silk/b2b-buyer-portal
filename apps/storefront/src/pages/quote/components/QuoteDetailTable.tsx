@@ -345,6 +345,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           productsSearch: { variants = [], taxClassId },
         } = row;
 
+        console.log('row', row)
+
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
           offeredPrice = basePrice;
