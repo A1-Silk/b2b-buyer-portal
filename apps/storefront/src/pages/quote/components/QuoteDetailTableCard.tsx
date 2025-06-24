@@ -36,6 +36,8 @@ function QuoteDetailTableCard(props: QuoteTableCardProps) {
     isAllowCheckout,
   } = props;
 
+  console.log('props', props)
+
   const b3Lang = useB3Lang();
   const enteredInclusiveTax = useAppSelector(
     ({ storeConfigs }) => storeConfigs.currencies.enteredInclusiveTax,
