@@ -345,8 +345,6 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           productsSearch: { variants = [], taxClassId },
         } = row;
 
-        console.log('row', row)
-
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
           offeredPrice = basePrice;
@@ -458,17 +456,20 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         itemIsMobileSpacing={0}
         noDataText={b3Lang('quoteDetail.table.noProducts')}
         tableKey="productId"
-        renderItem={(row, index) => (
-          <QuoteDetailTableCard
-            len={total || 0}
-            item={row}
-            showPrice={showPrice}
-            itemIndex={index}
-            currency={currency}
-            displayDiscount={displayDiscount}
-            getTaxRate={getTaxRate}
-          />
-        )}
+        renderItem={(row, index) => { 
+          return (
+            <QuoteDetailTableCard
+              len={total || 0}
+              item={row}
+              showPrice={showPrice}
+              itemIndex={index}
+              currency={currency}
+              displayDiscount={displayDiscount}
+              getTaxRate={getTaxRate}
+              isAllowCheckout={isAllowCheckout}
+            />
+          )
+        }}
       />
     </StyledQuoteTableContainer>
   );
