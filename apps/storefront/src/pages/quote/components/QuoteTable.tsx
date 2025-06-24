@@ -29,6 +29,7 @@ import { getProductOptionsFields } from '@/utils/b3Product/shared/config';
 import ChooseOptionsDialog from '../../ShoppingListDetails/components/ChooseOptionsDialog';
 
 import QuoteTableCard from './QuoteTableCard';
+import { OtherTips } from '@/components';
 
 interface ShoppingDetailTableProps {
   total: number;
@@ -317,7 +318,7 @@ function QuoteTable(props: ShoppingDetailTableProps) {
       key: 'Price',
       title: b3Lang('quoteDraft.quoteTable.price'),
       render: (row: CustomFieldItems) => {
-        const { basePrice, taxPrice } = row;
+        const { basePrice, taxPrice, calculatedValue } = row;
 
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
         return (
@@ -326,11 +327,17 @@ function QuoteTable(props: ShoppingDetailTableProps) {
               padding: '12px 0',
             }}
           >
-            {getDisplayPrice({
-              price: currencyFormat(inTaxPrice),
-              productInfo: row,
-              showText: b3Lang('quoteDraft.quoteSummary.tbd'),
-            })}
+            <OtherTips
+              price={(
+                <>{getDisplayPrice({
+                  price: currencyFormat(inTaxPrice),
+                  productInfo: row,
+                  showText: b3Lang('quoteDraft.quoteSummary.tbd'),
+                })}</>
+              )}
+              otherTips={calculatedValue?.otherTips}
+              needHidePrice={calculatedValue?.needHidePrice}
+            />
           </Typography>
         );
       },
@@ -373,7 +380,7 @@ function QuoteTable(props: ShoppingDetailTableProps) {
       key: 'Total',
       title: b3Lang('quoteDraft.quoteTable.total'),
       render: (row) => {
-        const { basePrice, quantity, taxPrice } = row;
+        const { basePrice, quantity, taxPrice, calculatedValue } = row;
 
         const inTaxPrice = getBCPrice(Number(basePrice), Number(taxPrice));
         const total = inTaxPrice * Number(quantity);
@@ -386,11 +393,17 @@ function QuoteTable(props: ShoppingDetailTableProps) {
                 padding: '12px 0',
               }}
             >
-              {getDisplayPrice({
-                price: currencyFormat(total),
-                productInfo: row,
-                showText: b3Lang('quoteDraft.quoteSummary.tbd'),
-              })}
+              <OtherTips
+                price={(
+                  <> {getDisplayPrice({
+                    price: currencyFormat(total),
+                    productInfo: row,
+                    showText: b3Lang('quoteDraft.quoteSummary.tbd'),
+                  })}</>
+                )}
+                otherTips={calculatedValue?.otherTips as string}
+                needHidePrice={calculatedValue?.needHidePrice as unknown as boolean}
+              />
             </Typography>
             <Box
               sx={{

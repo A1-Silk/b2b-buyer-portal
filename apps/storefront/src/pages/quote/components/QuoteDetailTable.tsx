@@ -109,7 +109,6 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
     currency,
     isAllowCheckout,
   } = props;
-  console.log('props', props)
 
   const isEnableProduct = useAppSelector(
     ({ global }) => global.blockPendingQuoteNonPurchasableOOS.isEnableProduct,
@@ -235,10 +234,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           otherTips,
           needHidePrice,
-          productsSearch: { variants = [], taxClassId, calculatedValue },
+          productsSearch: { variants = [], taxClassId },
         } = row;
-
-        console.log('row', row)
 
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
@@ -305,8 +302,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                     )}
                   </>
                 }
-                needHidePrice={isAllowCheckout ? false : (needHidePrice || calculatedValue?.need_hide_price)}
-                otherTips={isAllowCheckout ? '' : (otherTips || calculatedValue?.other_tips)}
+                needHidePrice={isAllowCheckout ? false : needHidePrice}
+                otherTips={isAllowCheckout ? '' : otherTips}
               />
             </Typography>
           </>
@@ -343,10 +340,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           quantity,
           otherTips,
           needHidePrice,
-          productsSearch: { variants = [], taxClassId, calculatedValue },
+          productsSearch: { variants = [], taxClassId },
         } = row;
-
-        console.log('row2', row)
 
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
@@ -414,8 +409,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
                     )}
                   </>
                 }
-                needHidePrice={isAllowCheckout ? false : (needHidePrice || calculatedValue?.need_hide_price)}
-                otherTips={isAllowCheckout ? '' : (otherTips || calculatedValue?.other_tips)}
+                needHidePrice={isAllowCheckout ? false : needHidePrice}
+                otherTips={isAllowCheckout ? '' : otherTips}
               />
             </Typography>
           </Box>
