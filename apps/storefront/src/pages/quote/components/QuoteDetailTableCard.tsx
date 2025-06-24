@@ -5,6 +5,7 @@ import { PRODUCT_DEFAULT_IMAGE } from '@/constants';
 import { useAppSelector } from '@/store';
 import { currencyFormatConvert } from '@/utils';
 import { getBCPrice } from '@/utils/b3Product/b3Product';
+import { OtherTips } from '@/components';
 
 interface QuoteTableCardProps {
   item: any;
@@ -14,6 +15,7 @@ interface QuoteTableCardProps {
   showPrice: (price: string, row: CustomFieldItems) => string | number;
   displayDiscount: boolean;
   currency: CurrencyProps;
+  isAllowCheckout?: boolean;
 }
 
 const StyledImage = styled('img')(() => ({
@@ -31,7 +33,9 @@ function QuoteDetailTableCard(props: QuoteTableCardProps) {
     showPrice,
     currency,
     displayDiscount,
+    isAllowCheckout,
   } = props;
+
   const b3Lang = useB3Lang();
   const enteredInclusiveTax = useAppSelector(
     ({ storeConfigs }) => storeConfigs.currencies.enteredInclusiveTax,
@@ -46,6 +50,8 @@ function QuoteDetailTableCard(props: QuoteTableCardProps) {
     sku,
     notes,
     offeredPrice,
+    otherTips,
+    needHidePrice,
     productsSearch: { productUrl, variants = [], taxClassId },
   } = quoteTableItem;
 
@@ -149,12 +155,16 @@ function QuoteDetailTableCard(props: QuoteTableCardProps) {
                   textDecoration: 'line-through',
                 }}
               >
-                {`${showPrice(
-                  currencyFormatConvert(price, {
-                    currency,
-                  }),
-                  quoteTableItem,
-                )}`}
+                <OtherTips
+                  price={`${showPrice(
+                    currencyFormatConvert(price, {
+                      currency,
+                    }),
+                    quoteTableItem,
+                  )}`}
+                  otherTips={isAllowCheckout ? '' : otherTips}
+                  needHidePrice={isAllowCheckout ? false : needHidePrice}
+                />
               </span>
             )}
             <span
@@ -163,12 +173,16 @@ function QuoteDetailTableCard(props: QuoteTableCardProps) {
                 color: isDiscount ? '#2E7D32' : '#212121',
               }}
             >
-              {`${showPrice(
-                currencyFormatConvert(offeredPrice, {
-                  currency,
-                }),
-                quoteTableItem,
-              )}`}
+              <OtherTips
+                price={`${showPrice(
+                  currencyFormatConvert(offeredPrice, {
+                    currency,
+                  }),
+                  quoteTableItem,
+                )}`}
+                otherTips={isAllowCheckout ? '' : otherTips}
+                needHidePrice={isAllowCheckout ? false : needHidePrice}
+              />
             </span>
           </Typography>
 

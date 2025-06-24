@@ -345,8 +345,6 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           productsSearch: { variants = [], taxClassId },
         } = row;
 
-        console.log('row', row)
-
         let offeredPrice = row.offeredPrice;
         if (!isAllowCheckout) {
           offeredPrice = basePrice;
@@ -459,7 +457,6 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         noDataText={b3Lang('quoteDetail.table.noProducts')}
         tableKey="productId"
         renderItem={(row, index) => { 
-          console.log('row2', row)
           return (
             <QuoteDetailTableCard
               len={total || 0}
@@ -469,6 +466,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
               currency={currency}
               displayDiscount={displayDiscount}
               getTaxRate={getTaxRate}
+              isAllowCheckout={isAllowCheckout}
             />
           )
         }}
