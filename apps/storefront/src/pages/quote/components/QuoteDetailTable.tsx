@@ -234,8 +234,7 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           otherTips,
           needHidePrice,
-          calculatedValue,
-          productsSearch: { variants = [], taxClassId },
+          productsSearch: { variants = [], taxClassId, calculatedValue },
         } = row;
 
         let offeredPrice = row.offeredPrice;
@@ -340,9 +339,8 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
           basePrice,
           quantity,
           otherTips,
-          calculatedValue,
           needHidePrice,
-          productsSearch: { variants = [], taxClassId },
+          productsSearch: { variants = [], taxClassId, calculatedValue },
         } = row;
 
         let offeredPrice = row.offeredPrice;
