@@ -458,17 +458,20 @@ function QuoteDetailTable(props: ShoppingDetailTableProps, ref: Ref<unknown>) {
         itemIsMobileSpacing={0}
         noDataText={b3Lang('quoteDetail.table.noProducts')}
         tableKey="productId"
-        renderItem={(row, index) => (
-          <QuoteDetailTableCard
-            len={total || 0}
-            item={row}
-            showPrice={showPrice}
-            itemIndex={index}
-            currency={currency}
-            displayDiscount={displayDiscount}
-            getTaxRate={getTaxRate}
-          />
-        )}
+        renderItem={(row, index) => { 
+          console.log('row2', row)
+          return (
+            <QuoteDetailTableCard
+              len={total || 0}
+              item={row}
+              showPrice={showPrice}
+              itemIndex={index}
+              currency={currency}
+              displayDiscount={displayDiscount}
+              getTaxRate={getTaxRate}
+            />
+          )
+        }}
       />
     </StyledQuoteTableContainer>
   );
