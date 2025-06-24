@@ -335,8 +335,8 @@ function QuoteTable(props: ShoppingDetailTableProps) {
                   showText: b3Lang('quoteDraft.quoteSummary.tbd'),
                 })}</>
               )}
-              otherTips={calculatedValue?.otherTips}
-              needHidePrice={calculatedValue?.needHidePrice}
+              otherTips={calculatedValue?.other_tips}
+              needHidePrice={calculatedValue?.need_hide_price}
             />
           </Typography>
         );
@@ -401,8 +401,8 @@ function QuoteTable(props: ShoppingDetailTableProps) {
                     showText: b3Lang('quoteDraft.quoteSummary.tbd'),
                   })}</>
                 )}
-                otherTips={calculatedValue?.otherTips as string}
-                needHidePrice={calculatedValue?.needHidePrice as unknown as boolean}
+                otherTips={calculatedValue?.other_tips as string}
+                needHidePrice={calculatedValue?.need_hide_price as unknown as boolean}
               />
             </Typography>
             <Box
