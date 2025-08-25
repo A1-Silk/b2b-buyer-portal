@@ -106,7 +106,8 @@ const B3Request = {
       const {
         secretKey,
         url,
-        customerID
+        customerID,
+        companyID,
       } = shophiveConfig
     
       if (!secretKey || !url || !customerID) {
@@ -118,6 +119,7 @@ const B3Request = {
       requestUrl = url + shophiveUrl
       config['a1-secret-key'] = secretKey;
       config['bcCustomerId'] = customerID;
+      config['bcCompanyId'] = companyID
     }
 
     return graphqlRequest(RequestType.B2BGraphql, data, config, requestUrl).then((value: B2bGQLResponse) => {
