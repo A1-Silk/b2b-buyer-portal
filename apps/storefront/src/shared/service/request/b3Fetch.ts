@@ -102,16 +102,17 @@ const B3Request = {
 
     let requestUrl
     if (isShophive && shophiveUrl) {
-      const shophiveConfig = (window as any).shophiveConfig;
+      const shophiveConfig = (window as any).shophive?.config || (window as any).shophiveConfig;
       const {
         secretKey,
         url,
         customerID,
         companyID,
+        isAgenting,
       } = shophiveConfig
     
-      if (!secretKey || !url || !customerID) {
-        const message = "Can't find secretKey or url or customerID in shophiveConfig"
+      if (!secretKey || !url || !customerID || !companyID) {
+        const message = "Can't find secret or customer in shophiveConfig"
         console.error(message);
         throw new Error(message);
       }
@@ -120,6 +121,7 @@ const B3Request = {
       config['a1-secret-key'] = secretKey;
       config['bcCustomerId'] = customerID;
       config['bcCompanyId'] = companyID
+      config['isAgenting'] = isAgenting
     }
 
     return graphqlRequest(RequestType.B2BGraphql, data, config, requestUrl).then((value: B2bGQLResponse) => {
