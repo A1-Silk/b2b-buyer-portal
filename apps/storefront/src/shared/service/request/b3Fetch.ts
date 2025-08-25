@@ -111,7 +111,7 @@ const B3Request = {
         isAgenting,
       } = shophiveConfig
     
-      if (!secretKey || !url || !customerID || !companyID) {
+      if (!secretKey || !url || !customerID) {
         const message = "Can't find secret or customer in shophiveConfig"
         console.error(message);
         throw new Error(message);
