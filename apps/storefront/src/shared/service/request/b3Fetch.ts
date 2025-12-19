@@ -51,14 +51,7 @@ function graphqlRequest<T, Y>(type: RequestTypeKeys, data: T, config?: Y, shophi
       'content-type': 'application/json',
       ...config,
     },
-    body: JSON.stringify(
-      shophiveUrl ?
-        {
-          ...data,
-          bundleUrl: GraphqlEndpointsFn(type)
-        }
-        : data
-    ),
+    body: data,
   };
 
   const url = shophiveUrl || GraphqlEndpointsFn(type)
